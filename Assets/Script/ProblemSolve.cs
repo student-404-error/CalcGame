@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using Random = UnityEngine.Random;
 
-public class GameManager : MonoBehaviour
+public class ProblemSolve : MonoBehaviour
 {
     public TMP_Text problemText;
     public TMP_InputField inputField;
@@ -31,12 +31,10 @@ public class GameManager : MonoBehaviour
             {
                 feedbackText.text = "Correct!";
                 score += 10;
-                print("Correct");
             }
             else
             {
                 feedbackText.text = "Wrong!";
-                print("Wrong");
             }
 
             scoreText.text = "Score: " + score.ToString();
@@ -71,10 +69,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // if (feedbackText != null)
-        // {
-        //     feedbackText.text = "";
-        // }
+        if (feedbackText != null)
+        {
+            feedbackText.text = "";
+        }
 
     }
 }
