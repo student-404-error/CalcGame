@@ -1,0 +1,36 @@
+{
+  "project_info": {
+    "project_number": "946235212343",
+    "project_id": "calcgame-fffc9",
+    "storage_bucket": "calcgame-fffc9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946235212343:ios:e7865b27c13cbc02b7f5b2",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.CalcGame"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZa7vmZyzEFqxK3foPv8pkR64eEaGuVPc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946235212343-5i5o5djfg8shfplovupmv6fr9rnjre38.apps.googleusercontent.com"
+        }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}
