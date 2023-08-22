@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Firebase.Auth;
+using Firebase;
+using Firebase.Database;
 public class FirebaseAuthManager
 {
     private FirebaseAuth auth;
     private FirebaseUser user;
     private static FirebaseAuthManager instance = null;
     public Action<bool> LoginState;
+    public SceneManager sceneManager;
     public string UserId => user.UserId;
     public static FirebaseAuthManager Instance
     {
@@ -23,7 +26,16 @@ public class FirebaseAuthManager
             return instance;
         }
     }
-
+    public void Awake()
+    {
+        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+        
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        {
+            FirebaseApp app = FirebaseApp.DefaultInstance;
+            DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+        });
+    }
     public void Init()
     {
         auth = FirebaseAuth.DefaultInstance;
@@ -43,14 +55,12 @@ public class FirebaseAuthManager
             bool signed = (auth.CurrentUser != user && auth.CurrentUser != null);
             if (!signed && user != null)
             {
-                Debug.Log("로그아웃");
                 LoginState?.Invoke(false);
             }
 
             user = auth.CurrentUser;
             if (signed)
             {
-                Debug.Log("로그인");
                 LoginState?.Invoke(true);
             }
         }
@@ -92,9 +102,9 @@ public class FirebaseAuthManager
                 Debug.LogError("canceled login");
                 return;
             }
-
             FirebaseUser newUser = task.Result.User;
             Debug.LogError("login complete");
+            sceneManager.moveScene("Main");
         });
     }
 
