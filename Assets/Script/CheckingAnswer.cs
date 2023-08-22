@@ -29,12 +29,10 @@ public class CheckingAnswer : MonoBehaviour
             {
                 feedbackText.text = "Correct!";
                 score += 10;
-                print("Correct");
             }
             else
             {
                 feedbackText.text = "Wrong!";
-                print("Wrong");
             }
 
             scoreText.text = "Score: " + score.ToString();

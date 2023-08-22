@@ -74,17 +74,17 @@ public class FirebaseAuthManager
         {
             if (task.IsCanceled)
             {
-                Debug.LogError("canceled register");
+                Debug.LogError("Canceled Register");
                 return;
             }
             else if (task.IsFaulted)
             {
-                Debug.LogError("canceled register");
+                Debug.LogError("Faulted Register");
                 return;
             }
 
             FirebaseUser newUser = task.Result.User;
-            Debug.LogError("Create User complete");
+            Debug.Log("Create User Complete");
         });
     }
 
@@ -94,23 +94,23 @@ public class FirebaseAuthManager
         {
             if (task.IsCanceled)
             {
-                Debug.LogError("canceled login");
+                Debug.LogError("Canceled Login");
                 return;
             }
             else if (task.IsFaulted)
             {
-                Debug.LogError("canceled login");
+                Debug.LogError("Faulted Login");
                 return;
             }
             FirebaseUser newUser = task.Result.User;
-            Debug.LogError("login complete");
-            sceneManager.moveScene("Main");
+            Debug.Log("Login Complete");
+            sceneManager.moveMain();
+
         });
     }
 
     public void Logout()
     {
         auth.SignOut();
-        Debug.Log("logout");
     }
 }

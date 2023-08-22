@@ -15,16 +15,29 @@ public class DateSave : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
         reference
-            .Child("users")
-            .Child("test")
-            .SetValueAsync("hihi");
+            .Child("Seong Hyeon")
+            .Child("2023-08-23")
+            .Child("PlayTime")
+            .SetValueAsync("15h 30m 20s");
         reference
-            .Child("users")
-            .Child("user_id")
-            .SetValueAsync("hello gangmin");
-
+            .Child("Seong Hyeon")
+            .Child("2023-08-23")
+            .Child("Problem")
+            .Child("S1")
+            .Child("Avg_time")
+            .SetValueAsync("30m 23s");
+        reference
+            .Child("Seong Hyeon")
+            .Child("2023-08-23")
+            .Child("Problem")
+            .Child("S1")
+            .Child("SolvedNum")
+            .SetValueAsync("15");
+        
+        
 // 데이터 읽기
         reference
             .Child("users")
@@ -38,5 +51,18 @@ public class DateSave : MonoBehaviour
                     string data = snapshot.Value.ToString();
                 }
             });
+    }
+
+    public void WriteDatabase(string userName, string date)
+    {
+        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+        reference
+            .Child("users")
+            .Child("test")
+            .SetValueAsync("hihi");
+        reference
+            .Child("users")
+            .Child("user_id")
+            .SetValueAsync("hello gangmin");
     }
 }

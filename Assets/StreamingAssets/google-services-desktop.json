@@ -2,6 +2,7 @@
   "project_info": {
     "project_number": "946235212343",
     "project_id": "calcgame-fffc9",
+    "firebase_url": "https://calcgame-fffc9-default-rtdb.firebaseio.com/",
     "storage_bucket": "calcgame-fffc9.appspot.com"
   },
   "client": [
