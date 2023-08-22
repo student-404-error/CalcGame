@@ -13,17 +13,24 @@ public class SceneManager : MonoBehaviour
     // public Button moveStageSix;
     // public Button moveStageSeven;
 
-    public void moveScene(string sceneName)
+    // public void moveScene(string sceneName)
+    // {
+    //     Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName("Main");
+    //     Debug.Log(scene.IsValid());
+    //     if (scene.IsValid())
+    //     {
+    //         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    //         // UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+    //         
+    //     }
+    //     else
+    //     {
+    //         Debug.LogError("not exist SceneName you input");
+    //     }
+    // }
+
+    public void moveMain()
     {
-        Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByName(sceneName);
-        if (scene.IsValid())
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
-        }
-        else
-        {
-            Debug.LogError("not exist SceneName you input");
-        }
-        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
     }
 }

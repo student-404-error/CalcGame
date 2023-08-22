@@ -9,17 +9,16 @@ public class LoginSystem : MonoBehaviour
     public TMP_InputField pass;
     public TMP_Text outputText;
     private FirebaseAuth auth;
-    private SceneManager SceneManager;
+    public SceneManager sceneManager;
     void Start()
     {
-        
+        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
         auth = FirebaseAuth.DefaultInstance;
         
         if (auth.CurrentUser != null)
         {
             // 이미 로그인된 유저가 있다면, 다음 화면으로 이동 등의 처리를 해줄 수 있습니다.
-            SceneManager.moveScene("Main");
-            Debug.Log("자동 로그인되었습니다.");
+            sceneManager.moveMain();
         }
         else
         {

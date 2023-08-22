@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
 
     private bool isAppInForeground = true;
 
+    public void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void OnApplicationFocus(bool hasFocus)
     {
         if (hasFocus)
