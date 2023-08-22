@@ -8,73 +8,41 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    public TMP_Text problemText;
-    public TMP_InputField inputField;
-    public TMP_Text feedbackText;
-    public TMP_Text scoreText;
-    public Button submit;
+    private float startTime;
+    private float totalTime;
 
-    private int currentProblemResult;
-    private int score = 0;
+    private bool isAppInForeground = true;
 
-    private void Start()
+    private void OnApplicationFocus(bool hasFocus)
     {
-        GenerateProblem();
-    }
-
-    public void SubmitAnswer()
-    {
-        int userAnswer;
-        if (int.TryParse(inputField.text, out userAnswer))
+        if (hasFocus)
         {
-            if (userAnswer == currentProblemResult)
+            // 앱이 포그라운드로 진입할 때 시간 측정 시작
+            if (!isAppInForeground)
             {
-                feedbackText.text = "Correct!";
-                score += 10;
-                print("Correct");
+                startTime = Time.realtimeSinceStartup;
+                isAppInForeground = true;
             }
-            else
-            {
-                feedbackText.text = "Wrong!";
-                print("Wrong");
-            }
-
-            scoreText.text = "Score: " + score.ToString();
-
-            GenerateProblem();
         }
         else
         {
-            feedbackText.text = "Invalid input";
+            // 앱이 백그라운드로 진입할 때 시간 측정 중단
+            if (isAppInForeground)
+            {
+                totalTime += Time.realtimeSinceStartup - startTime;
+                isAppInForeground = false;
+            }
         }
-
-        inputField.text = "";
     }
 
-    private void GenerateProblem()
+    private void OnApplicationQuit()
     {
-        int num1 = Random.Range(1, 101);
-        int num2 = Random.Range(1, 101);
-        bool isSubtraction = Random.Range(0, 2) == 0; // 50% chance of subtraction
-
-        if (problemText != null)
+        // 앱 종료 시 총 시간 저장
+        if (isAppInForeground)
         {
-            if (isSubtraction)
-            {
-                currentProblemResult = num1 - num2;
-                problemText.text = num1.ToString() + " - " + num2.ToString();
-            }
-            else
-            {
-                currentProblemResult = num1 + num2;
-                problemText.text = num1.ToString() + " + " + num2.ToString();
-            }
+            totalTime += Time.realtimeSinceStartup - startTime;
         }
 
-        // if (feedbackText != null)
-        // {
-        //     feedbackText.text = "";
-        // }
-
+        // totalTime이 총시간이니깐 데이터베이스에 날짜별로 누적하면 될듯하네요
     }
 }
