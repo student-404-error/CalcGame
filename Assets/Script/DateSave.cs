@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase;
 using Firebase.Database;
+using System;
 public class DateSave : MonoBehaviour
 {
     // private DatabaseReference databaseReference;
     // Start is called before the first frame update
+    private LoginSystem loginSystem;
+    private string userName;
+    private string date;
+    public int a = 1;
     void Start()
     {
+        DateTime dateTime = DateTime.Now;
+        loginSystem = GameObject.Find("Canvas").GetComponent<LoginSystem>();
+        // userName = loginSystem.name.text;
+        userName = "gangmin";
+        date = dateTime.ToString("yyyy-MMMM-dd");
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
@@ -17,21 +27,21 @@ public class DateSave : MonoBehaviour
     {
         
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+        // reference
+        //     .Child(userName)
+        //     .Child(date)
+        //     .Child("PlayTime")
+        //     .SetValueAsync("15h 30m 20s");
         reference
-            .Child("Seong Hyeon")
-            .Child("2023-08-23")
-            .Child("PlayTime")
-            .SetValueAsync("15h 30m 20s");
-        reference
-            .Child("Seong Hyeon")
-            .Child("2023-08-23")
-            .Child("Problem")
+            .Child(userName)
+            .Child(date)
+            .Child("Problem1")
             .Child("S1")
             .Child("Avg_time")
             .SetValueAsync("30m 23s");
         reference
-            .Child("Seong Hyeon")
-            .Child("2023-08-23")
+            .Child(userName)
+            .Child(date)
             .Child("Problem")
             .Child("S1")
             .Child("SolvedNum")
@@ -53,6 +63,15 @@ public class DateSave : MonoBehaviour
             });
     }
 
+    public void TotalTimeUpdate(string totalTime)
+    {
+        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference; 
+        reference
+            .Child(userName)
+            .Child(date)
+            .Child("TotalTime")
+            .SetValueAsync(totalTime);
+    }
     public void WriteDatabase(string userName, string date)
     {
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;

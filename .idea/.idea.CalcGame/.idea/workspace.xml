@@ -7,18 +7,31 @@
     <list default="true" id="43ee63db-c67a-4d56-8c56-a3dfe369306a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CalcGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CalcGame/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Login.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Login.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Login.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Login.unity.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Calgame.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/Calgame.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/CheckingAnswer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/CheckingAnswer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scene1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scene1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scene1.unity.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scene1.unity.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage1.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage1.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage2.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage2.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage3.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage3.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage4.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage4.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage5.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage5.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage6.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage6.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage7.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Stage/Stage7.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/DateSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DateSave.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/FirebaseAuthManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/FirebaseAuthManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/LevelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/LevelManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/LevelManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/LevelManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/LoginSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/LoginSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/SceneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/SceneManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StreamingAssets/google-services-desktop.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StreamingAssets/google-services-desktop.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Button.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UI/Button.prefab.meta" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +45,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Script/CheckingAnswer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/DateSave.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/LoginSystem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/MainBTN.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/SceneManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/play-games-plugin-for-unity-0.11.01/Assets/Public/GooglePlayGames/com.google.play.games/Editor/GPGSAndroidSetupUI.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -120,7 +134,7 @@
       <workItem from="1692346420948" duration="706000" />
       <workItem from="1692375033754" duration="10880000" />
       <workItem from="1692563996342" duration="1440000" />
-      <workItem from="1692728492207" duration="9633000" />
+      <workItem from="1692728492207" duration="20025000" />
     </task>
     <servers />
   </component>

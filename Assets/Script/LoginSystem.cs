@@ -5,11 +5,12 @@ using UnityEngine;
 using TMPro;
 public class LoginSystem : MonoBehaviour
 {
+    public TMP_Text name;
     public TMP_InputField email;
     public TMP_InputField pass;
-    public TMP_Text outputText;
+    private TMP_Text outputText;
     private FirebaseAuth auth;
-    public SceneManager sceneManager;
+    private SceneManager sceneManager;
     void Start()
     {
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
