@@ -7,13 +7,18 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
+    public GameObject popup;
+    public GameObject CorrectNumberGauge;
+
     public TMP_Text problemText;
     public TMP_Text scoreText;
     public TMP_Text leftButtonText;
     public TMP_Text rightButtonText;
     public Button leftButton;
     public Button rightButton;
-    private int playedRound;
+    public int playedRound = 0;
+    public float accuracy = 0;
+
     private int num1;
     private int num2;
     private bool isRightSign;
@@ -21,11 +26,23 @@ public class LevelManager : MonoBehaviour
     private int score = 0;
     private bool correctAnswerBool;
     private int correctAnswerInt;
-    private int levelNum;
-    private GameManager mGameManager;
+    public int levelNum;
+    public float startTime;
+    public float playTime;
+    public float solvedSpeed;
 
+    // 게임 종료 후 출력하는 텍스트
+    public TMP_Text AccuracyText;
+    public TMP_Text QuestionNumberText;
+    public TMP_Text PlayTimeText;
+    public TMP_Text AverageSolveTimeText;
+    public TMP_Text CorrectNumberPercent;
+    private GameManager mGameManager;
     private void Start()
     {
+        popup.SetActive(false); // 팝업창 끄기
+        startTime = Time.realtimeSinceStartup; // 시작시간 측정
+        
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         levelNum = mGameManager.levelNum; // 임시로 레벨을 지정 (추후 스테이지 선택에서 값을 받을예정)
 
@@ -49,6 +66,46 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    // 원형 그래프 채우는 애니메이션
+    public IEnumerator AnimateGraph(float targetAccuracy, float duration)
+    {
+        float tempGraphPercent = 0;
+        float percentage = 0;
+
+        for (float time = duration; time > 0; time -= Time.deltaTime)
+        {
+            float deltaAmount = (1 - time * time * 4) * targetAccuracy;
+            this.CorrectNumberGauge.GetComponent<Image>().fillAmount += deltaAmount - tempGraphPercent;
+            percentage += (deltaAmount - tempGraphPercent) * 100;
+            tempGraphPercent = deltaAmount; // 이전 프레임까지 늘어난 양
+
+            
+            CorrectNumberPercent.SetText(percentage.ToString("N0"));
+
+            yield return null;
+        }
+    }
+
+    // 끝나는 게임창을 보여주는 함수
+    public void ShowEndResult()
+    {
+        playTime = Time.realtimeSinceStartup - startTime; // 끝나는 시간 측정
+
+        if (score != 0)
+        {
+            accuracy = (float)score / playedRound * 100;
+            accuracy = Mathf.Round((accuracy * 10f) / 10f);
+        }
+        
+        solvedSpeed = ((float)playedRound / playTime) * 60; // 분당 푼 문제 수
+        StartCoroutine(AnimateGraph(accuracy / 100, 0.5f));  
+
+        AccuracyText.SetText("Accuracy\n" + accuracy.ToString("F1") + "%");    // 정확도
+        QuestionNumberText.SetText("QuestionNumber\n" + playedRound);          // 문제 개수
+        PlayTimeText.SetText("PlayTime\n" + playTime.ToString("N0") + "s");    // 플레이 시간
+        AverageSolveTimeText.SetText("AverageSpeed\n" + solvedSpeed.ToString("N0") + "/min");   // 평균 풀이 시간
+
+    }
     public void CheckAnswer(bool playerChoice)
     {
         playedRound++; // 플레이 횟수 증가
@@ -110,8 +167,6 @@ public class LevelManager : MonoBehaviour
         leftButtonText.SetText("O");
         rightButtonText.SetText("X");
     }
-
-
     public void GenerateStageTwo()
     {
         int num1 = Random.Range(0, 10);
@@ -143,7 +198,6 @@ public class LevelManager : MonoBehaviour
             rightButtonText.SetText(correctAnswerInt.ToString());
         }
     }
-
     public void GenerateStageThree()
     {
         int num1 = Random.Range(0, 10);
@@ -172,8 +226,6 @@ public class LevelManager : MonoBehaviour
         leftButtonText.SetText("O");
         rightButtonText.SetText("X");
     }
-
-
     public void GenerateStageFour()
     {
         int num1 = Random.Range(0, 10);
@@ -211,7 +263,6 @@ public class LevelManager : MonoBehaviour
             rightButtonText.SetText(correctAnswerInt.ToString());
         }
     }
-
     public void GenerateStageFive()
     {
         int num1 = Random.Range(0, 10);
@@ -240,7 +291,6 @@ public class LevelManager : MonoBehaviour
         leftButtonText.SetText("O");
         rightButtonText.SetText("X");
     }
-
     public void GenerateStageSix()
     {
         int num1 = Random.Range(10, 100);
@@ -315,8 +365,6 @@ public class LevelManager : MonoBehaviour
             rightButtonText.SetText(correctAnswerInt.ToString());
         }
     }
-
-    
     public void GenerateStageEight()
     {
         int num1 = Random.Range(10, 100);
@@ -370,7 +418,6 @@ public class LevelManager : MonoBehaviour
         leftButtonText.SetText("O");
         rightButtonText.SetText("X");
     }
-
     public void GenerateStageNine()
     {
         num1 = Random.Range(1, 10);
@@ -402,7 +449,6 @@ public class LevelManager : MonoBehaviour
             rightButtonText.SetText(correctAnswerInt.ToString());
         }
     }
-
     public void GenerateStageTen()
     {
         int num1 = Random.Range(100, 1000);
@@ -434,7 +480,6 @@ public class LevelManager : MonoBehaviour
             rightButtonText.SetText(correctAnswerInt.ToString());
         }
     }
-
     public void GenerateStageEleven()
     {
         int num1 = Random.Range(100, 1000);
@@ -471,7 +516,6 @@ public class LevelManager : MonoBehaviour
             rightButtonText.SetText(correctAnswerInt.ToString());
         }
     }
-
     public void GenerateStageTwelve()
     {
         num1 = Random.Range(10, 100);
@@ -503,7 +547,6 @@ public class LevelManager : MonoBehaviour
             rightButtonText.SetText(correctAnswerInt.ToString());
         }
     }
-
     public void GenerateStageThirteen()
     {
         int num1 = Random.Range(1000, 5000);
@@ -535,7 +578,6 @@ public class LevelManager : MonoBehaviour
             rightButtonText.SetText(correctAnswerInt.ToString());
         }
     }
-
     public void GenerateStageFourteen()
     {
         int num1 = Random.Range(1000, 10000);

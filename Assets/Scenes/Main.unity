@@ -205,8 +205,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1143004198}
   m_HandleRect: {fileID: 1143004197}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.99999094
+  m_Value: 0.9999996
+  m_Size: 0.77091354
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2060,11 +2060,11 @@ RectTransform:
   - {fileID: 20526643}
   m_Father: {fileID: 154606621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.00036621}
-  m_SizeDelta: {x: 1920, y: 4155.1}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1594.1001}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &749693964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2078,9 +2078,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 1545479011}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -3575,6 +3575,7 @@ GameObject:
   - component: {fileID: 1545479011}
   - component: {fileID: 1545479012}
   - component: {fileID: 1545479013}
+  - component: {fileID: 1545479015}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -3610,10 +3611,10 @@ RectTransform:
   - {fileID: 1431853545}
   m_Father: {fileID: 791558156}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000059417645, y: 0.010890111}
-  m_SizeDelta: {x: 0, y: 300}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -1, y: 2077.6753}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1545479012
 MonoBehaviour:
@@ -3651,6 +3652,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69860629ff97740d7a3ce0b4d24eada2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1545479015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545479010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1 &1594394817
 GameObject:
   m_ObjectHideFlags: 0

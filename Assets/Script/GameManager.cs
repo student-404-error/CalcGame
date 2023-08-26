@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
     private DateSave dataSave;
     public string userName; 
     private string date;
-    
+    private DatabaseReference reference;
     public void Start()
     {
         
-        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
         DateSave dateSave = GameObject.Find("DataManager").GetComponent<DateSave>();
         DontDestroyOnLoad(gameObject);
         DateTime dateTime = DateTime.Now;
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         // 앱 종료 시 총 시간 저장
-        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
+        reference = FirebaseDatabase.DefaultInstance.RootReference;
         
         totalTime += Time.realtimeSinceStartup - startTime;
         Debug.Log(totalTime);
