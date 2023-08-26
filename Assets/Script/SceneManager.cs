@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class SceneManager : MonoBehaviour
 {
+    public string mvScene;
     // public Button moveStageOne;
     // public Button moveStageTwo;
     // public Button moveStageThree;
@@ -33,4 +34,9 @@ public class SceneManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
     }
+    public void moveStage()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Scene1");
+    }
+    
 }

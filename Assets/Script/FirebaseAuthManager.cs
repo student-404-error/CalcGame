@@ -11,6 +11,7 @@ public class FirebaseAuthManager
     private FirebaseAuth auth;
     private FirebaseUser user;
     private static FirebaseAuthManager instance = null;
+    private GameManager mGameManager;
     public Action<bool> LoginState;
     public SceneManager sceneManager;
     public string UserId => user.UserId;
@@ -29,7 +30,8 @@ public class FirebaseAuthManager
     public void Awake()
     {
         sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
-        
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+ 
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             FirebaseApp app = FirebaseApp.DefaultInstance;
@@ -103,9 +105,9 @@ public class FirebaseAuthManager
                 return;
             }
             FirebaseUser newUser = task.Result.User;
+            mGameManager.userName = newUser.UserId.ToString();
             Debug.Log("Login Complete");
             sceneManager.moveMain();
-
         });
     }
 

@@ -8,15 +8,15 @@ public class ButtonClickScript : MonoBehaviour
 
     public void Start()
     {
-        levelManager = GameObject.Find("GameManager").GetComponent<LevelManager>();
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
     }
 
-    public void OnLeftButtonClicked() // ¿ÞÂÊ ¹öÆ°À» ´­·¶´ÂÁö
+    public void OnLeftButtonClicked() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         levelManager.CheckAnswer(true);
     }
 
-    public void OnRightButtonClicked() // ¿À¸¥ÂÊ ¹öÆ°À» ´­·¶´ÂÁö
+    public void OnRightButtonClicked() // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         levelManager.CheckAnswer(false);
     }
