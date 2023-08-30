@@ -37,6 +37,7 @@ public class FirebaseAuthManager
             FirebaseApp app = FirebaseApp.DefaultInstance;
             DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
         });
+        // Logout();
     }
     public void Init()
     {
@@ -114,5 +115,6 @@ public class FirebaseAuthManager
     public void Logout()
     {
         auth.SignOut();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Login");
     }
 }

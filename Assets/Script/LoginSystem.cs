@@ -26,14 +26,13 @@ public class LoginSystem : MonoBehaviour
 
         // auto Login
         auth = FirebaseAuth.DefaultInstance;
+        // auth.SignOut();
         if (auth.CurrentUser != null)
         {
             // 이미 로그인된 유저가 있다면, 다음 화면으로 이동 등의 처리를 해줄 수 있습니다.
-            // dataSave.DataInit();
-            // mGameManager.userName = nameInput.text;
-            // mGameManager.userName = auth.CurrentUser.UserId;
-            // Debug.Log(auth.CurrentUser.UserId.ToString());
             sceneManager.moveMain();
+            // LogOut();
+            // auth.SignOut();
         }
         else
         {
@@ -41,6 +40,7 @@ public class LoginSystem : MonoBehaviour
             FirebaseAuthManager.Instance.LoginState += OnChangedState;
             FirebaseAuthManager.Instance.Init();
         }
+        // LogOut();
     }
 
     private void OnChangedState(bool sign)

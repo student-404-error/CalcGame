@@ -3,11 +3,11 @@ using UnityEngine;
 [Serializable]
 public class StageData
 {
-    public int PlayTime;
+    public float PlayTime;
     public int PlayedRound;
-    public int Accuracy;
-    public int QuestionNumber;
-    public int AverageSpeed;
+    public float Accuracy;
+    public float AverageSpeed;
+    public int Score;
 }
 
 [Serializable]

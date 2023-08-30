@@ -23,18 +23,27 @@ public class DateSave : MonoBehaviour
         reference = FirebaseDatabase.DefaultInstance.RootReference;
         userName = mGameManager.userName;
         date = dateTime.ToString("yyyy-MMMM-dd");
-        
-        
-        
-        reference.Child(userName).Child(date).Child("Problem").Child("S1").Child("Accuracy").SetValueAsync("10");
-        reference.Child(userName).Child(date).GetValueAsync().ContinueWithOnMainThread(task =>
+
+
+        if (userName != null)
         {
-            if (task.IsFaulted || task.IsCanceled)
-            {
-                InitData();
-            }
-        });
-        // InitData();
+            reference
+                .Child(userName)
+                .Child(date)
+                .Child("Problem")
+                .GetValueAsync()
+                .ContinueWithOnMainThread(task =>
+                {
+                    if (task.Result.Value == null)
+                    {
+                        InitData();
+                    }
+                    else if (task.IsCompleted)
+                    {
+                        Debug.Log(task.Result);
+                    }
+                });
+        }
     }
 
     public void SetName(string name)

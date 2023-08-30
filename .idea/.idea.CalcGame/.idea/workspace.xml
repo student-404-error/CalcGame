@@ -5,16 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43ee63db-c67a-4d56-8c56-a3dfe369306a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Script/data.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Script/data.json.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CalcGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CalcGame/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Login.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Login.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Scene1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Scene1.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/DateSave.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/DateSave.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/FirebaseAuthManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/FirebaseAuthManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/GameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Script/LevelManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/LevelManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/LoginSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/LoginSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/MainBTN.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/MainBTN.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/Scene1BTN.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/Scene1BTN.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/StageData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/StageData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/data.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ResizeUIElement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ResizeUIElement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ResizeUIElementGM.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ResizeUIElementGM.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,9 +39,13 @@
     <setting file="file://$PROJECT_DIR$/Assets/Script/MainBTN.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/Scene1BTN.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/SceneManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Script/SoundManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Script/StageData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_InputField.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/play-games-plugin-for-unity-0.11.01/Assets/Public/GooglePlayGames/com.google.play.games/Editor/GPGSAndroidSetupUI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/11b82f0970ae4241910180e22ab84b6f172600/45/a3ce39de/SceneManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/11b82f0970ae4241910180e22ab84b6f172600/84/68a91205/Screen.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/11b82f0970ae4241910180e22ab84b6f172600/c0/5a4054fc/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -122,7 +134,7 @@
       <workItem from="1692346420948" duration="706000" />
       <workItem from="1692375033754" duration="10880000" />
       <workItem from="1692563996342" duration="1440000" />
-      <workItem from="1692728492207" duration="59509000" />
+      <workItem from="1692728492207" duration="109962000" />
     </task>
     <servers />
   </component>
