@@ -11,18 +11,18 @@ public class LevelManager : MonoBehaviour
     public GameObject correctNumberGauge;
     public GameObject explainImageChoose;
     public GameObject explainImageCalc;
-    public GameObject goodFace;
-    public GameObject badFace;
+    public GameObject goodFaceprefab;
+    public GameObject badFaceprefab;
+    private GameObject instantPrefab;
+    private Vector2 createPoint;
     
     public TMP_Text problemText;
     public TMP_Text leftButtonText;
     public TMP_Text rightButtonText;
     public TMP_Text levelText;
     public TMP_Text scoreText;
-    public Button leftButton;
-    public Button rightButton;
-    public AudioClip correctSound; // 정답 효과음
-
+    
+    
     public int playedRound = 0;
     public float accuracy = 0;
     private bool isFeedbackShowing = false;    
@@ -48,16 +48,22 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         popup.SetActive(false); // 팝업창 끄기
-        goodFace.SetActive(false);
-        badFace.SetActive(false);
+        if (instantPrefab != null)
+        {
+            Destroy(instantPrefab);
+        }
+        // 프리팹 생성 위치
+        createPoint.x = 0.0f;
+        createPoint.y = 0.0f;
         
         startTime = Time.realtimeSinceStartup; // 시작시간 측정
         
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         levelNum = mGameManager.levelNum; // 임시로 레벨을 지정 (추후 스테이지 선택에서 값을 받을예정)
         levelText.SetText(levelNum.ToString()); // 현재 레벨 표시
         
-        if (levelNum is 1 or 3 or 6) // 대소비교 연산 게임인 경우
+        if (levelNum is 1 or 3 or 5 or 8) // 대소비교 연산 게임인 경우
         {
             explainImageChoose.SetActive(true);
             explainImageCalc.SetActive(false);
@@ -102,7 +108,7 @@ public class LevelManager : MonoBehaviour
             tempGraphPercent = deltaAmount; // 이전 프레임까지 늘어난 양
 
             
-            CorrectNumberPercent.SetText(percentage.ToString("N0"));
+            CorrectNumberPercent.SetText("Accuracy\n" + percentage.ToString("N0") + "%");
 
             yield return null;
         }
@@ -119,13 +125,13 @@ public class LevelManager : MonoBehaviour
             accuracy = Mathf.Round((accuracy * 10f) / 10f);
         }
         
-        solvedSpeed = ((float)playedRound / playTime) * 60; // 분당 푼 문제 수
+        solvedSpeed = ((float)playTime / playedRound); // 1 문제당 걸린 시간
         StartCoroutine(AnimateGraph(accuracy / 100, 0.5f));  
 
         AccuracyText.SetText("Accuracy\n" + accuracy.ToString("F1") + "%");                     // 정확도
-        QuestionNumberText.SetText("QuestionNumber\n" + playedRound);                                 // 문제 개수
+        QuestionNumberText.SetText("# of Question\n" + playedRound);                                   // 문제 개수
         PlayTimeText.SetText("PlayTime\n" + playTime.ToString("N0") + "s");                     // 플레이 시간
-        AverageSolveTimeText.SetText("AverageSpeed\n" + solvedSpeed.ToString("N0") + "/min");   // 평균 풀이 시간
+        AverageSolveTimeText.SetText("Solved Speed\n" + solvedSpeed.ToString("N0") + "s");      // 평균 풀이 시간
 
     }
     public void CheckAnswer(bool playerChoice)
@@ -156,38 +162,23 @@ public class LevelManager : MonoBehaviour
         
         StartCoroutine(DisplayFeedback(isCorrect));
     }
+    // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator DisplayFeedback(bool isCorrect)
     {
-        if (isCorrect)
-        {
-            goodFace.SetActive(true);
-        }
-        else
-        {
-            badFace.SetActive(true);
-        }
-        
-        // 효과음 재생
-        AudioSource.PlayClipAtPoint(correctSound, transform.position);
-        
-        // 일정 시간(예: 2초) 동안 대기
+        instantPrefab = Instantiate(isCorrect ? goodFaceprefab : badFaceprefab, createPoint, Quaternion.identity, GameObject.Find("Canvas").transform);
+        // 일정 시간(예: 1초) 동안 대기
         yield return new WaitForSecondsRealtime(1f);
-
-        // 이모티콘 제거 및 다음 문제 생성
-        if (isCorrect)
-        {
-            goodFace.SetActive(false);
-        }
-        else
-        {
-            badFace.SetActive(false);
-        }
 
         isFeedbackShowing = false; // 피드백 종료
         CreateNewQuestion();
     }
     private void CreateNewQuestion()
     {
+        if (instantPrefab != null)
+        {
+            Destroy(instantPrefab);
+        }
+        
         switch (levelNum)
         {
             case 1: GenerateStageOne(); break;
@@ -240,7 +231,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " + " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n +   " + num2.ToString());
 
         if (mIsRightSign) // right is Correct
         {
@@ -274,7 +265,7 @@ public class LevelManager : MonoBehaviour
         mCorrectAnswerBool = leftResult > rightResult;
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " + " + num2.ToString() + "     " + num3.ToString() + " + " + num4.ToString());
+        problemText.SetText(num1.ToString() + " + " + num2.ToString() + "   " + num3.ToString() + " + " + num4.ToString());
         leftButtonText.SetText(num1.ToString() + " + " + num2.ToString());
         rightButtonText.SetText(num3.ToString() + " + " + num4.ToString());
     }
@@ -300,7 +291,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " - " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n -   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {
@@ -317,15 +308,15 @@ public class LevelManager : MonoBehaviour
     }
     private void GenerateStageFive()
     {
-        int num1 = Random.Range(0, 10);
-        int num2 = Random.Range(0, 10);
-        int num3 = num1;
-        int num4 = num2;
-        while (true)
+        int num1 = Random.Range(1, 10);
+        int num2 = Random.Range(1, 10);
+        int num3 = Random.Range(1, 10);
+        int num4 = Random.Range(1, 10);
+        
+        while (num1 - num2 != num3 - num4 && num1 >= num2 && num3 >= num4)
         {
-            num3 = Random.Range(0, 10);
+            num2 = Random.Range(0, 10);
             num4 = Random.Range(0, 10);
-            if (num1 - num2 != num3 - num4) break;
         }
 
         int leftResult = num1 - num2;
@@ -334,7 +325,7 @@ public class LevelManager : MonoBehaviour
         mCorrectAnswerBool = leftResult > rightResult;
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " - " + num2.ToString() + "     " + num3.ToString() + " - " + num4.ToString());
+        problemText.SetText(num1.ToString() + " - " + num2.ToString() + "   " + num3.ToString() + " - " + num4.ToString());
         leftButtonText.SetText(num1.ToString() + " - " + num2.ToString());
         rightButtonText.SetText(num3.ToString() + " - " + num4.ToString());
     }
@@ -359,7 +350,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " - " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n -   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {
@@ -397,7 +388,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " - " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n -   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {
@@ -415,55 +406,25 @@ public class LevelManager : MonoBehaviour
     private void GenerateStageEight()
     {
         int num1 = Random.Range(10, 100);
-        int num2 = num1;
+        int num2 = Random.Range(10, 100);
+        int num3 = num1;
+        int num4 = num2;
         while (true)
         {
-            num2 = Random.Range(10, 100);
-            if (num1 % 10 >= num2 % 10 && num1 > num2) break;
-        }
-        int num3 = Random.Range(10, 100);
-        int num4 = Random.Range(10, 100);
-
-        int subtractResult = num1 - num2; // 두 수의 차를 저장
-        int sumResult = num3 + num4;      // 두 수의 합을 저장
-
-        mIsRightSign = Random.Range(0, 2) == 0;        // 부등호의 방향 결정
-        mStrictInequality = mIsRightSign ? '>' : '<';  // 부등호의 방향을 저장
-
-        bool isRightOperator = Random.Range(0, 2) == 0;             // 연산자의 위치 설정
-        int leftStrictInequality = isRightOperator ? '+' : '-';  // 연산자의 종류를 저장
-        int rightStrictInequality = isRightOperator ? '-' : '+'; // 연산자의 종류를 저장
-
-        // 출력할 부등호에 따를 O, X 정답을 correctAnswer에 저장
-        if (mIsRightSign) // 오른쪽이 더 큰 부등호
-        {
-            if (isRightOperator) // 왼쪽이 + 라면
-            {
-                mCorrectAnswerBool = sumResult > subtractResult;
-                problemText.SetText(num3.ToString() + " + " + num4.ToString() + " " + mStrictInequality + " " + num1.ToString() + " - " + num2.ToString());
-            }
-            else
-            {
-                mCorrectAnswerBool = subtractResult > sumResult;
-                problemText.SetText(num1.ToString() + " - " + num2.ToString() + " " + mStrictInequality + " " + num3.ToString() + " + " + num4.ToString());
-            }
-        }
-        else             // 왼쪽이 더 큰 부등호
-        {
-            if (isRightOperator) // 왼쪽이 + 라면
-            {
-                mCorrectAnswerBool = sumResult < subtractResult;
-                problemText.SetText(num3.ToString() + " + " + num4.ToString() + " " + mStrictInequality + " " + num1.ToString() + " - " + num2.ToString());
-            }
-            else
-            {
-                mCorrectAnswerBool = subtractResult < sumResult;
-                problemText.SetText(num1.ToString() + " - " + num2.ToString() + " " + mStrictInequality + " " + num3.ToString() + " + " + num4.ToString());
-            }
+            num3 = Random.Range(10, 100);
+            num4 = Random.Range(10, 100);
+            if (num3 >= num4 && num3 % 10 >= num4 % 10) break;
         }
 
-        leftButtonText.SetText("O");
-        rightButtonText.SetText("X");
+        int leftResult = num1 + num2;
+        int rightResult = num3 - num4;
+
+        mCorrectAnswerBool = leftResult > rightResult;
+
+        // 문제를 출력
+        problemText.SetText(num1.ToString() + " + " + num2.ToString() + "   " + num3.ToString() + " - " + num4.ToString());
+        leftButtonText.SetText(num1.ToString() + " + " + num2.ToString());
+        rightButtonText.SetText(num3.ToString() + " - " + num4.ToString());
     }
     private void GenerateStageNine()
     {
@@ -481,7 +442,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " * " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n X   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {
@@ -512,7 +473,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " + " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n +   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {
@@ -548,7 +509,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " - " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n -   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {
@@ -579,7 +540,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " * " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n X   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {
@@ -610,7 +571,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " + " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n +   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {
@@ -632,7 +593,8 @@ public class LevelManager : MonoBehaviour
         while (true)
         {
             num2 = Random.Range(1000, 10000);
-            if (num1 % 10 >= num2 % 10 && (num1 / 10) % 10 >= (num2 / 10) % 10 && (num1 / 100) % 10 >= (num2 / 100) % 10 && num1 > num2) break; // 받아내림 제거
+            if (num1 % 10 >= num2 % 10 && (num1 / 10) % 10 >= (num2 / 10) % 10 
+                                       && (num1 / 100) % 10 >= (num2 / 100) % 10 && num1 > num2) break; // 받아내림 제거
         }
 
         mCorrectAnswerInt = num1 - num2;
@@ -646,7 +608,7 @@ public class LevelManager : MonoBehaviour
         mIsRightSign = Random.Range(0, 2) == 0; // 정답의 방향을 결정 (참이면 오른쪽)
 
         // 문제를 출력
-        problemText.SetText(num1.ToString() + " - " + num2.ToString() + " =");
+        problemText.SetText(num1.ToString() + "\n -   " + num2.ToString());
 
         if (mIsRightSign) // 정답이 오른쪽
         {

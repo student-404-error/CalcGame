@@ -6,12 +6,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class MainBTN : MonoBehaviour
 {
-    private SceneManager sceneManager;
     private GameManager mGameManager;
+    private SceneManager mSceneManager;
     // Start is called before the first frame update
     void Start()
     {
-        sceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
+        mSceneManager = GameObject.Find("SceneManager").GetComponent<SceneManager>();
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
@@ -19,7 +19,7 @@ public class MainBTN : MonoBehaviour
     {
         string buttonText = clickedButton.GetComponentInChildren<TMP_Text>().name;
         mGameManager.levelNum = int.Parse(buttonText);
-        sceneManager.moveStage();
+        mSceneManager.moveStage();
         Debug.Log(mGameManager.levelNum);
     }
     

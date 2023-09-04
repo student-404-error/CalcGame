@@ -30,14 +30,14 @@ public class LoginSystem : MonoBehaviour
         if (auth.CurrentUser != null)
         {
             // 이미 로그인된 유저가 있다면, 다음 화면으로 이동 등의 처리를 해줄 수 있습니다.
-            sceneManager.moveMain();
+            sceneManager.MoveMain();
             // LogOut();
             // auth.SignOut();
         }
         else
         {
-            dataSave.SetName(nameInput.text);
-            FirebaseAuthManager.Instance.LoginState += OnChangedState;
+            // dataSave.SetName(nameInput.text);
+            FirebaseAuthManager.Instance.loginState += OnChangedState;
             FirebaseAuthManager.Instance.Init();
         }
         // LogOut();
@@ -55,12 +55,12 @@ public class LoginSystem : MonoBehaviour
         string e = email.text;
         string p = pass.text;
         
-        FirebaseAuthManager.Instance.Create(e, p);
+        FirebaseAuthManager.Instance.Create();
     }
 
     public void Login()
     {   
-        FirebaseAuthManager.Instance.Login(email.text, pass.text);
+        FirebaseAuthManager.Instance.Login();
     }
 
     public void LogOut()

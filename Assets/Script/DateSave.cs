@@ -1,35 +1,52 @@
 using UnityEngine;
 using System;
+using System.Threading.Tasks;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
-using Google.MiniJSON;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 
 public class DateSave : MonoBehaviour
 {
-    private string userName;
-    private string date;
-    private DatabaseReference reference;
-    private LoginSystem loginSystem;
+    private string mUserName;
+    private string mDate;
+    private DatabaseReference mReference;
     private GameManager mGameManager;
 
-    void Start()
+    private async void Start()
     {
-        DateTime dateTime = DateTime.Now;
-        loginSystem = GameObject.Find("Canvas").GetComponent<LoginSystem>();
-        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        reference = FirebaseDatabase.DefaultInstance.RootReference;
-        userName = mGameManager.userName;
-        date = dateTime.ToString("yyyy-MMMM-dd");
-
-
-        if (userName != null)
+        await DoAsyncWork();
+        await FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
-            reference
-                .Child(userName)
-                .Child(date)
+            FirebaseApp app = FirebaseApp.DefaultInstance;
+            mReference = FirebaseDatabase.GetInstance(app, "https://calcgame-fffc9-default-rtdb.firebaseio.com").RootReference;
+            // Firebase 초기화 및 종속성 확인 작업이 완료된 후에 실행될 코드
+            // InitializeFirebaseData();
+        });
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+    private async Task DoAsyncWork()
+    {
+        // 비동기 작업 수행
+        await Task.Delay(500); // 예시로 1초 대기
+        Debug.Log("Async work completed.");
+    }
+    public async void InitializeFirebaseData()
+    {
+        await DoAsyncWork();
+        DateTime dateTime = DateTime.Now;
+        mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        mUserName = mGameManager.userName;
+        mDate = dateTime.ToString("yyyy-MMMM-dd");
+
+    
+        Debug.Log(mUserName);
+
+        if (mUserName != null)
+        {
+            await DoAsyncWork();
+            await mReference
+                .Child(mUserName)
+                .Child(mDate)
                 .Child("Problem")
                 .GetValueAsync()
                 .ContinueWithOnMainThread(task =>
@@ -40,19 +57,19 @@ public class DateSave : MonoBehaviour
                     }
                     else if (task.IsCompleted)
                     {
-                        Debug.Log(task.Result);
+                        Debug.Log("Data Initialized Successful");
                     }
                 });
         }
     }
 
-    public void SetName(string name)
-    {
-        reference
-            .Child(userName)
-            .Child("Name")
-            .SetValueAsync(name);
-    }
+    // public void SetName(string name)
+    // {
+    //     mReference
+    //         .Child(mUserName)
+    //         .Child("Name")
+    //         .SetValueAsync(name);
+    // }
 
     private void InitData()
     {
@@ -64,7 +81,7 @@ public class DateSave : MonoBehaviour
             }
             else
             {
-                reference = FirebaseDatabase.DefaultInstance.RootReference;
+                mReference = FirebaseDatabase.DefaultInstance.RootReference;
 
                 // 데이터 생성
                 DateData dateData = new DateData
@@ -88,7 +105,7 @@ public class DateSave : MonoBehaviour
                     }
                 };
                 string json = JsonUtility.ToJson(dateData);
-                reference.Child(userName).Child(date).SetRawJsonValueAsync(json).ContinueWithOnMainThread(saveTask =>
+                mReference.Child(mUserName).Child(mDate).SetRawJsonValueAsync(json).ContinueWithOnMainThread(saveTask =>
                 {
                     if (saveTask.Exception != null)
                     {
