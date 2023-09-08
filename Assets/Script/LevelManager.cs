@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -95,6 +96,7 @@ public class LevelManager : MonoBehaviour
     }
 
     // 원형 그래프 채우는 애니메이션
+    // ReSharper disable Unity.PerformanceAnalysis
     private IEnumerator AnimateGraph(float targetAccuracy, float duration)
     {
         float tempGraphPercent = 0;
@@ -114,9 +116,15 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private async Task DoAsyncWork(int sec)
+    {
+        await Task.Delay(sec);
+        Debug.Log("Async work completed.");
+    }
     // 끝나는 게임창을 보여주는 함수
     public void ShowEndResult()
     {
+        
         playTime = Time.realtimeSinceStartup - startTime; // 끝나는 시간 측정
 
         if (score != 0)
@@ -130,8 +138,8 @@ public class LevelManager : MonoBehaviour
 
         AccuracyText.SetText("Accuracy\n" + accuracy.ToString("F1") + "%");                     // 정확도
         QuestionNumberText.SetText("# of Question\n" + playedRound);                                   // 문제 개수
-        PlayTimeText.SetText("PlayTime\n" + playTime.ToString("N0") + "s");                     // 플레이 시간
-        AverageSolveTimeText.SetText("Solved Speed\n" + solvedSpeed.ToString("N0") + "s");      // 평균 풀이 시간
+        PlayTimeText.SetText("PlayTime\n" + playTime.ToString("N0") + "sec");                     // 플레이 시간
+        AverageSolveTimeText.SetText("Avg. Speed\n" + solvedSpeed.ToString("N0") + "sec");      // 평균 풀이 시간
 
     }
     public void CheckAnswer(bool playerChoice)
@@ -313,7 +321,7 @@ public class LevelManager : MonoBehaviour
         int num3 = Random.Range(1, 10);
         int num4 = Random.Range(1, 10);
         
-        while (num1 - num2 != num3 - num4 && num1 >= num2 && num3 >= num4)
+        while (num1 - num2 == num3 - num4 || num1 < num2 || num3 < num4)
         {
             num2 = Random.Range(0, 10);
             num4 = Random.Range(0, 10);
