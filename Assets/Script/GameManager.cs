@@ -47,9 +47,18 @@ public class GameManager : MonoBehaviour
                 }
                 else if (task.IsCompleted)
                 {
+                    string snapString;
                     DataSnapshot snapshot = task.Result; // GetValueAsync의 결과값을 가져옴
-                    string snapString = snapshot.Value.ToString();
-                    Debug.Log(snapString);
+                    Debug.Log(snapshot);
+                    if (snapshot.Value.ToString() == null)
+                    {
+                        mTotalTime = 0.0f;
+                        snapString = "0.0f";
+                    }
+                    else
+                    {
+                        snapString = snapshot.Value.ToString();
+                    }
                     if (float.TryParse(snapString, out float snapFloat))
                     {
                         // 문자열을 float로 성공적으로 변환한 경우, snapFloat에 할당됩니다.

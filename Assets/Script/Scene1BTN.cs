@@ -27,35 +27,36 @@ public class Scene1BTN : MonoBehaviour
     private float mCurPlayTime;
     private int mCurScore;
 
-    private async void Awake()
+    private void Awake()
     {
         mGameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        
+    }
+
+    public async void Start()
+    {
         await FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             FirebaseApp app = FirebaseApp.DefaultInstance;
             mReference = FirebaseDatabase.GetInstance(app, "https://calcgame-fffc9-default-rtdb.firebaseio.com").RootReference;
         });
-    }
-
-    public async void Start()
-    {
         mDateTime = DateTime.Now;
         levelNum = levelManager.levelNum;
         userName = mGameManager.userName;
         mDate = mDateTime.ToString("yyyy-MMMM-dd");
 
         mStage = "S" + levelNum.ToString("D2");
-        Debug.Log(mStage);
+        Debug.Log("now level:" + mStage);
         // 변수 초기화
         playRound = 0;
         playTime = 0f;
         score = 0;
-        await DoAsyncWork(500);
+        
         playRound =  (int)await LoadGameDataAsync("PlayedRound");
         playTime = await LoadGameDataAsync("PlayTime");
         score = (int)await LoadGameDataAsync("Score");
-
+        // Debug.Log($"{playRound}, {playTime}, {score}");
     }
 
     private async Task DoAsyncWork(int sec)
@@ -91,36 +92,38 @@ public class Scene1BTN : MonoBehaviour
         return targetValue;
     }
 
-    public void GoMainFromGame()
+    public async void GoMainFromGame()
     {
         mCurPlayRound = levelManager.playedRound;
+        await DoAsyncWork(300);
         if (mCurPlayRound == 0)
         {
             Debug.Log("you don't play game!!");
         }
         else
         {
-            UpdateGameDataAsync("PlayedRound", playRound + mCurPlayRound);
+            UpdateGameDataAsyncInt("PlayedRound", playRound + mCurPlayRound);
 
             mCurScore = levelManager.score;
-            UpdateGameDataAsync("Score", score + mCurScore);
+            UpdateGameDataAsyncInt("Score", score + mCurScore);
 
             mCurAccuracy = levelManager.accuracy;
             float updateAccuracy = (float)(score + mCurScore) / (playRound + mCurPlayRound) * 100;
             mCurSolvedSpeed = levelManager.solvedSpeed;
-            float updateSpeed = (playRound + mCurPlayRound) / (playTime + mCurPlayTime) * 60;
+            float updateSpeed = (playTime + mCurPlayTime) / (playRound + mCurPlayRound);
+            Debug.Log($"{playRound}, {mCurPlayRound}, {playTime}, {mCurPlayTime} update=> {updateAccuracy}, {updateSpeed}");
 
-            mReference.Child(userName).Child(mDate).Child("Problem").Child(mStage).Child("AverageSpeed")
-                .SetValueAsync(updateSpeed);
-            mReference.Child(userName).Child(mDate).Child("Problem").Child(mStage).Child("Accuracy")
-                .SetValueAsync(updateAccuracy);
+            UpdateGameDataAsyncFloat("AverageSpeed", updateSpeed);
+            UpdateGameDataAsyncFloat("Accuracy", updateAccuracy);
         }
         mCurPlayTime = levelManager.playTime;
-        UpdateGameDataAsync("PlayTime", playTime + mCurPlayTime);
+        UpdateGameDataAsyncFloat("PlayTime", playTime + mCurPlayTime);
+        Debug.Log($"{playRound + mCurPlayRound}, {playTime + mCurPlayTime}, {score + mCurScore}, {(playRound + mCurPlayRound) / (playTime + mCurPlayTime) * 60}, {(float)(score + mCurScore) / (playRound + mCurPlayRound) * 100}");
+
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
     }
 
-    private void UpdateGameDataAsync(string dataKey, float newValue)
+    private void UpdateGameDataAsyncInt(string dataKey, int newValue)
     {
         try
         {
@@ -134,7 +137,24 @@ public class Scene1BTN : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"Failed to update {dataKey}: {e.Message}");
+            Debug.LogError($"Failed to update Int {dataKey}: {e.Message}");
+        }
+    }
+    private void UpdateGameDataAsyncFloat(string dataKey, float newValue)
+    {
+        try
+        {
+            mReference
+                .Child(userName)
+                .Child(mDate)
+                .Child("Problem")
+                .Child(mStage)
+                .Child(dataKey)
+                .SetValueAsync(newValue);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"Failed to update Float {dataKey}: {e.Message}");
         }
     }
 }

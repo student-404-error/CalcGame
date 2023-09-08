@@ -14,7 +14,7 @@ public class DateSave : MonoBehaviour
 
     private async void Start()
     {
-        await DoAsyncWork();
+        // await DoAsyncWork();
         await FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
             FirebaseApp app = FirebaseApp.DefaultInstance;
@@ -109,7 +109,7 @@ public class DateSave : MonoBehaviour
                 {
                     if (saveTask.Exception != null)
                     {
-                        Debug.LogError("Failed to save data: " + saveTask.Exception);
+                        Debug.Log("Failed to save data: " + saveTask.Exception);
                     }
                     else
                     {
